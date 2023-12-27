@@ -14,6 +14,7 @@ import ua.yehor.autolightbackend.model.UserEntity;
 import ua.yehor.autolightbackend.repository.UserRepository;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Service class responsible for user-related operations.
@@ -108,8 +109,10 @@ public class UserService {
      * @param roleName The name of the role to add.
      * @return The updated UserEntity with the added role.
      */
-    public UserEntity addRoleToUser(String login, String roleName) {
+    public Set<Role> addRoleToUser(String login, String roleName) {
         UserEntity foundUser = getByLogin(login);
+
+        roleName = roleName.replaceAll("\"", "");
 
         Role newRole = Role.valueOf(roleName);
 
@@ -119,7 +122,7 @@ public class UserService {
 
         foundUser.addRole(newRole);
 
-        return userRepository.save(foundUser);
+        return userRepository.save(foundUser).getRoles();
     }
 
     /**
@@ -129,7 +132,7 @@ public class UserService {
      * @param roleName The name of the role to remove.
      * @return The updated UserEntity after removing the role.
      */
-    public UserEntity removeRoleFromUser(String login, String roleName) {
+    public Set<Role> removeRoleFromUser(String login, String roleName) {
         UserEntity foundUser = getByLogin(login);
 
         Role deletingRole = Role.valueOf(roleName);
@@ -140,6 +143,10 @@ public class UserService {
 
         foundUser.removeRole(deletingRole);
 
-        return userRepository.save(foundUser);
+        return userRepository.save(foundUser).getRoles();
+    }
+
+    public Set<Role> getAllUserRoles(String login) {
+        return getByLogin(login).getRoles();
     }
 }

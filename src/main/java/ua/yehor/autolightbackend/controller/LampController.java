@@ -66,6 +66,7 @@ public class LampController {
      */
     @PatchMapping
     public ResponseEntity<Set<LampEntity>> changeLightLevelOfLamp(@RequestBody LampEditingDto lampEditingDto) {
+        System.out.println(lampEditingDto);
         return new ResponseEntity<>(lampService.editLamp(lampEditingDto), HttpStatus.CREATED);
     }
 

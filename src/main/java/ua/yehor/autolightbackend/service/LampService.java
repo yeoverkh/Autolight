@@ -91,12 +91,12 @@ public class LampService {
      *
      * @param deletionLampDto The DeletionLampDto object containing details to delete the lamp.
      */
-    public void removeLampFromDevice(DeletionLampDto deletionLampDto) {
+    public Set<LampEntity> removeLampFromDevice(DeletionLampDto deletionLampDto) {
         DeviceEntity device = deviceService.getDeviceById(deletionLampDto.deviceId());
 
         LampEntity lamp = lampRepository.findByName(deletionLampDto.name());
 
         device.removeLamp(lamp);
-        deviceService.saveDevice(device);
+        return deviceService.saveDevice(device).getLamps();
     }
 }

@@ -5,10 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
+import ua.yehor.autolightbackend.model.Role;
 import ua.yehor.autolightbackend.model.UserEntity;
 import ua.yehor.autolightbackend.service.UserService;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Controller managing user-related endpoints.
@@ -43,6 +45,11 @@ public class UserController {
         return ResponseEntity.ok(userService.getByLogin(login));
     }
 
+    @GetMapping("/{login}/roles")
+    public ResponseEntity<Set<Role>> getAllUserRoles(@PathVariable String login) {
+        return ResponseEntity.ok(userService.getAllUserRoles(login));
+    }
+
     /**
      * Adds a role to a specific user.
      *
@@ -51,7 +58,7 @@ public class UserController {
      * @return ResponseEntity containing the updated UserEntity after adding the role, HTTP status CREATED
      */
     @PostMapping("/{login}/roles")
-    public ResponseEntity<UserEntity> addRoleToUser(@PathVariable String login, @RequestBody String role) {
+    public ResponseEntity<Set<Role>> addRoleToUser(@PathVariable String login, @RequestBody String role) {
         return new ResponseEntity<>(userService.addRoleToUser(login, role), HttpStatus.CREATED);
     }
 
@@ -63,7 +70,7 @@ public class UserController {
      * @return ResponseEntity containing the updated UserEntity after removing the role
      */
     @DeleteMapping("/{login}/roles")
-    public ResponseEntity<UserEntity> removeRoleFromUser(@PathVariable String login, @RequestBody String role) {
+    public ResponseEntity<Set<Role>> removeRoleFromUser(@PathVariable String login, @RequestBody String role) {
         return ResponseEntity.ok(userService.removeRoleFromUser(login, role));
     }
 
@@ -75,9 +82,9 @@ public class UserController {
      * @throws AccessDeniedException if access to delete the user is denied
      */
     @DeleteMapping("/{login}")
-    public ResponseEntity<Void> deleteUserByLogin(@PathVariable String login) throws AccessDeniedException {
+    public ResponseEntity<List<UserEntity>> deleteUserByLogin(@PathVariable String login) throws AccessDeniedException {
         userService.deleteByLogin(login);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 }

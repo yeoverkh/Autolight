@@ -54,8 +54,8 @@ public class DeviceController {
      * @return ResponseEntity with no content and HTTP status NO_CONTENT
      */
     @DeleteMapping
-    public ResponseEntity<Set<DeviceEntity>> deleteDeviceFromUser(@RequestBody DeletionDeviceDto deletionDeviceDto) {
+    public ResponseEntity<List<DeviceEntity>> deleteDeviceFromUser(@RequestBody DeletionDeviceDto deletionDeviceDto) {
         deviceService.deleteDeviceFromUser(deletionDeviceDto);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(deviceService.getAllDevicesByUserLogin(deletionDeviceDto.userLogin()));
     }
 }
