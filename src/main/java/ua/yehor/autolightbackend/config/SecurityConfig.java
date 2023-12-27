@@ -85,10 +85,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorization -> authorization
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**",
                                 "/register", "/login").permitAll()
-//                        .requestMatchers("/users/**").hasAuthority("ADMIN")
-//                        .requestMatchers("/devices/**", "/lamps/**").hasAuthority("TECHNICIAN")
+                        .requestMatchers("/users/**").hasAuthority("ADMIN")
+                        .requestMatchers("/devices/**", "/lamps/**").hasAuthority("TECHNICIAN")
                         .anyRequest().authenticated())
-//                        .anyRequest().permitAll())
                 .sessionManagement(management -> management
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
