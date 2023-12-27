@@ -8,25 +8,39 @@ the lighting environment, promoting wellness and comfort.
 Technicians can add Devices to Users and each Device can read some data about Users’ health,
 Users can look at warnings about their health and change Lamps characteristics based on this.
 
+---
+
 ### Stack:
 
 Java 17, Spring Boot 3, Spring Security, Spring Data Jpa + Hibernate, PostgreSQL
+
+---
+
+## Some diagrams for this service:
 
 ### Entity-Relational Diagram
 
 ![](diagrams/er.png)
 
+---
+
 ### Component Diagram
 
 ![](diagrams/component.png)
+
+---
 
 ### Use Case Diagram
 
 ![](diagrams/use%20case.png)
 
+---
+
 ### Activity Diagram
 
 ![](diagrams/activity.png)
+
+---
 
 ### Interaction Diagram
 
